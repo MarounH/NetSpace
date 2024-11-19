@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#sudo modprobe nbd 
+
+./clean_netspace
+mv makefile_netspace makefile 
+make debug 
+mv makefile makefile_netspace
+
+sleep 1
+
+#gnome-terminal --title="mkfs terminal" -- bash -c "sudo mkfs.ext4 /dev/nbd2"
+
+#gnome-terminal --title="mount terminal" -- bash -c "sudo mount /dev/nbd7 /mnt"
+
+sudo ./net_space.out 
+
+#sudo umount /dev/nbd7
+#sudo modprobe -r nbd

@@ -1,0 +1,30 @@
+#!/bin/bash
+
+CC = g++ -std=c++17
+CFLAGS = -pedantic-errors -Wall -Wextra -rdynamic -L./pnp/ -Wl,-rpath,./pnp/
+RELEASE = -DNDEBUG -O3
+DEBUG = -g
+INCLUDE = -I framework/include -I include
+OBJ = src/ram_storage.o src/driver_data.o src/nbd_driver_communicator.o src/net_space.o src/logger.o ./framework/src/i_task.o ./framework/src/i_re_task.o ./framework/src/thread_pool.o ./framework/src/pnp.o 
+TARGET = net_space.out
+
+
+$(TARGET): $(OBJ) 
+	$(CC) $(INCLUDE) -o $(TARGET) $(CFLAGS) $(OBJ)
+
+%.o: %.cpp 
+	$(CC) -c -o $@  $< $(INCLUDE) $(CFLAGS) 
+
+all: clean
+all: $(TARGET)
+
+debug: CFLAGS += $(DEBUG)
+debug: $(OBJ)
+	$(CC) $(CFLAGS) $^ -o $(TARGET)
+
+release: CFLAGS += $(RELEASE)
+release: $(OBJ)
+	$(CC) $(CFLAGS) $^ -o $(TARGET)
+
+clean:
+	rm -f $(OBJ) *.out core.*

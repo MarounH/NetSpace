@@ -1,0 +1,7 @@
+#!/bin/bash
+
+mv makefile_netspace makefile 
+
+make clean 
+
+mv makefile makefile_netspace

@@ -1,0 +1,30 @@
+#!/bin/bash
+
+CC = g++ -std=c++17
+CFLAGS = -pedantic-errors -Wall -Wextra -rdynamic -L./pnp/ -Wl,-rpath,./pnp/
+RELEASE = -DNDEBUG -O3
+DEBUG = -g
+INCLUDE = -I include
+OBJ = src/driver_data.o src/serializable_text.o test/serializable_text_test.o
+TARGET = serializer.out
+
+
+$(TARGET): $(OBJ) 
+	$(CC) $(INCLUDE) -o $(TARGET) $(CFLAGS) $(OBJ)
+
+%.o: %.cpp 
+	$(CC) -c -o $@  $< $(INCLUDE) $(CFLAGS) 
+
+all: clean
+all: $(TARGET)
+
+debug: CFLAGS += $(DEBUG)
+debug: $(OBJ)
+	$(CC) $(CFLAGS) $^ -o $(TARGET)
+
+release: CFLAGS += $(RELEASE)
+release: $(OBJ)
+	$(CC) $(CFLAGS) $^ -o $(TARGET)
+
+clean:
+	rm -f $(OBJ) *.out core.*
