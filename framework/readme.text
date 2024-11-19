@@ -1,0 +1,7 @@
+This is the request engine framework. 
+Can be used for variety of projects requiring to handle requests.
+Configurable on compile time, with ability to configue on run-time by injecting shared object.
+Uses thread pool for better performance.
+Includes failsafe mechanism.
+Written in c++ 17. 
+Runs on linux, but can be easily changed to other operating systems.
