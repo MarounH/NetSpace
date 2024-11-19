@@ -1,0 +1,31 @@
+#!/bin/bash
+
+CC = g++ -std=c++11
+CFLAGS = -pedantic-errors -Wall -Wextra
+RELEASE = -DNDEBUG -O3
+DEBUG = -g
+INCLUDE = include
+DEPS = include/thread_pool.hpp include/i_task.hpp include/waitable_pq.hpp
+OBJ = src/thread_pool.o src/i_task.o test/thread_pool_test.o
+TARGET = thread_pool.out
+
+
+$(TARGET): $(OBJ) $(DEPS)
+	$(CC) -o $(TARGET) $(CFLAGS) $(OBJ)
+
+%.o: %.cpp $(DEPS)
+	$(CC) -c -o $@  $< $(CFLAGS) -I $(INCLUDE)
+
+all: clean
+all: $(TARGET)
+
+debug: CFLAGS += $(DEBUG)
+debug: $(OBJ)
+	$(CC) $(CFLAGS) $^ -o $(TARGET)
+
+release: CFLAGS += $(RELEASE)
+release: $(OBJ)
+	$(CC) $(CFLAGS) $^ -o $(TARGET)
+
+clean:
+	rm -f $(OBJ) *.out core.*

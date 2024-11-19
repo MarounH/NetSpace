@@ -1,0 +1,9 @@
+#!/bin/bash 
+
+g++ -std=c++11 -c -fpic -I ./include/ -I ./src/so_creator.cpp
+
+g++ -std=c++11 -shared so_creator.o -o libso.so 
+
+#g++ -std=c++11 singleton_test.cpp -o test_so.out -L. -Wl,-rpath,. -lso 
+
+#rm singleton_test_so.o

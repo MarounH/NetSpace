@@ -1,0 +1,9 @@
+#!/bin/bash
+
+mv makefile_re_fw makefile 
+
+make clean 
+
+make debug 
+
+mv makefile makefile_re_fw

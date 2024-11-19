@@ -1,0 +1,32 @@
+#!/bin/bash
+
+CC = g++ -std=c++11
+CFLAGS = -pedantic-errors -Wall -Wextra -rdynamic -L./pnp/ -Wl,-rpath,./pnp/
+RELEASE = -DNDEBUG -O3
+DEBUG = -g
+INCLUDE = include
+DEPS = include/pnp.hpp include/msg_broker.hpp
+OBJ = src/pnp.o test/pnp_test.o
+TARGET = pnp.out
+
+
+$(TARGET): $(OBJ) $(DEPS)
+	$(CC) -o $(TARGET) $(CFLAGS) $(OBJ)
+
+%.o: %.cpp $(DEPS)
+	$(CC) -c -o $@  $< $(CFLAGS) -I $(INCLUDE)
+
+all: clean
+all: $(TARGET)
+
+debug: CFLAGS += $(DEBUG)
+debug: $(OBJ)
+	$(CC) $(CFLAGS) $^ -o $(TARGET)
+
+release: CFLAGS += $(RELEASE)
+release: $(OBJ)
+	$(CC) $(CFLAGS) $^ -o $(TARGET)
+
+clean:
+	rm -f $(OBJ) *.out core.*
+

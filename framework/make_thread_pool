@@ -1,0 +1,9 @@
+#!/bin/bash
+
+mv makefile_thread_pool makefile 
+
+make clean 
+
+make debug 
+
+mv makefile makefile_thread_pool

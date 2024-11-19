@@ -1,0 +1,9 @@
+#!/bin/bash
+
+mv makefile_pnp makefile 
+
+make clean 
+
+make debug 
+
+mv makefile makefile_pnp
